@@ -13,5 +13,6 @@ export class RDV{
             this.dateHeure;
             this.statusRDV;
             this.property;
+            this.userClient
         }
 }

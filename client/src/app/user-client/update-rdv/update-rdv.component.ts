@@ -1,37 +1,40 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserClientService } from '../services/user-client.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RDV } from '../model/RDV';
-import { format, isBefore, parseISO, startOfToday } from 'date-fns';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { ToastrService } from 'ngx-toastr';
+import { format, isBefore, parseISO, startOfToday } from 'date-fns';
+import { RDV } from '../model/RDV';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+
 @Component({
-  selector: 'app-add-rdv',
-  templateUrl: './add-rdv.component.html',
-  styleUrls: ['./add-rdv.component.css']
+  selector: 'app-update-rdv',
+  templateUrl: './update-rdv.component.html',
+  styleUrls: ['./update-rdv.component.css']
 })
-export class AddRDVComponent implements OnInit{
+export class UpdateRdvComponent implements OnInit {
   dateNonDispo : string[] = [];
   propertyId!:number;
-  addRdvForm!: FormGroup;
+  rdvId!:number;
+  updateRdvForm!: FormGroup;
   constructor(private clientService:UserClientService,
     private route: ActivatedRoute,
     private router: Router,
     private fb:FormBuilder,
-    private toastr: ToastrService
-  ){}
+    private toastr: ToastrService){}
 
+    
   ngOnInit(): void {
-    this.propertyId = +this.route.snapshot.paramMap.get('propertyId')!;
-    console.log("ad rdv property  ID",this.propertyId)
+    this.rdvId = +this.route.snapshot.paramMap.get('rdvId')!;
+
+    console.log("rdv Id",this.rdvId)
     
     this.initForm();
     this.AllDateNonDisp();
   }
   initForm() {
-    this.addRdvForm = this.fb.group({
-      description: ['', Validators.required],
+    this.updateRdvForm = this.fb.group({
+      description: [''],
       date: ['', Validators.required],
       time: ['', Validators.required]
     });
@@ -55,7 +58,6 @@ export class AddRDVComponent implements OnInit{
     const isUnavailable = this.dateNonDispo.some(dateNonDispo => format(parseISO(dateNonDispo), 'yyyy-MM-dd') === dateStr);
     return !isUnavailable && !isBefore(d, today);
   };
-
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     if (view === 'month') {
       const today = startOfToday();
@@ -68,8 +70,8 @@ export class AddRDVComponent implements OnInit{
 
 
   onSubmit(){
-    if (this.addRdvForm.valid) {
-      const formValues = this.addRdvForm.value;
+    if (this.updateRdvForm.valid) {
+      const formValues = this.updateRdvForm.value;
       const date = new Date(formValues.date);
       const time = formValues.time.split(':');
       date.setHours(time[0], time[1]);
@@ -80,15 +82,15 @@ export class AddRDVComponent implements OnInit{
         
     
     console.log("dddddd",newRdv)
-    this.clientService.AddRDV(newRdv,this.propertyId).subscribe((data)=>{
-      console.log('Rendezvous added successfully', data);
-      this.toastr.success('RDV added successfully');
-      this.router.navigate(['/user-client']);
+    this.clientService.updateRdv(newRdv,this.rdvId).subscribe((data)=>{
+      console.log('Rendezvous updated successfully', data);
+      this.toastr.success('RDV updated successfully');
+      this.router.navigate(['/AllRDV']);
 
     },
     (error) => {
-      console.error('Error saveing RDV:', error);
-      this.toastr.error('Error saving RDV. Please choose another time ');
+      console.error('Error updating RDV:', error);
+      this.toastr.error('Error updating RDV. Please choose another time ');
     }
   
   )

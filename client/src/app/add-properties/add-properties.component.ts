@@ -22,6 +22,7 @@ export class AddPropertyComponent {
   property: Property = new Property();
 
   saveProperty() {
+    console.log(this.property);
     this.propertyService.addProperty(this.property).subscribe(data => {
       console.log(data);
       this.goToPropertyList();

@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Property } from 'src/app/properties';
 import { TokenStorageService } from 'src/app/services/keycloak/token-storage.service';
-import { RDV } from '../module/RDV';
+import { RDV } from '../model/RDV';
+import { FilterDTO } from '../model/FilterDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +62,41 @@ AllRDV(): Observable<RDV[]>{
  deleteRDV(id: number): Observable<void> {
   const headers = this.getHeaders();
   return this.httpClient.delete<void>(`${this.baseURL}rdv/${id}`,{ headers , responseType: 'text' as 'json' });
+}
+updateRdv(rdv:RDV,rdvId : number):Observable<RDV>{
+  const headers = this.getHeaders();
+  return this.httpClient.put<RDV>(`${this.baseURL}rdv/${rdvId}`,{headers});
+}
+changeStatus(rdvId: number,status: string): Observable<any>{
+  const headers = this.getHeaders();
+  const params = new HttpParams().set('status', status);
+
+  return this.httpClient.put<any>(`${this.baseURL}rdv/change/${rdvId}`,null,{headers, params});
+}
+
+// /////////
+canceledRdv(rdvId : number):Observable<RDV>{
+  const headers = this.getHeaders();
+  return this.httpClient.post<RDV>(`${this.baseURL}rdv/canceld/${rdvId}`,{headers});
+}
+
+fliterRDVForHost(filterDto :FilterDTO):Observable<RDV[]>{
+  const headers = this.getHeaders();
+  return this.httpClient.post<RDV[]>(`${this.baseURL}rdv/host-filter`,filterDto,{headers});
+}
+
+fliterRDVForClient(filterDto :FilterDTO):Observable<RDV[]>{
+  const headers = this.getHeaders();
+  return this.httpClient.post<RDV[]>(`${this.baseURL}rdv/client-filter`,filterDto,{headers});
+}
+
+
+getRDVCount(): Observable<number> {
+  const headers = this.getHeaders();
+  return this.httpClient.get<number>(`${this.baseURL}rdv/count`,{ headers});
+}
+getRDVDateNow(): Observable<RDV[]>{
+  const headers = this.getHeaders();
+  return this.httpClient.get<RDV[]>(`${this.baseURL}/rdv/HOST`,{ headers})
 }
 }

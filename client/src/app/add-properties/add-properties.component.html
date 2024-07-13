@@ -1,10 +1,10 @@
 <br><br>
 <br><br>
 <div class="container-sm">
-    <div class="col-md-6 offset-md-3  container-sm ">
+    <div class="col-md-6 offset-md-3  container-sm  mb-5">
         <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" class="row g-3 form-container  container-sm">
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 ">
                 <label><b>Type</b></label>
                 <select id="type" class="form-select" [(ngModel)]="property.type" name="type"
                     required #type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && type.errors }">
@@ -12,10 +12,9 @@
                         <div *ngIf="type.errors['required']">Type is required</div>
                     </div>
                     <option selected disabled value="">Choose...</option>
-                    <option>House</option>
-                    <option>Apartment</option>
-                    <option>Condo</option>
-                    <option>Townhouse</option>
+                    <option value="Maison">Maison</option>
+                    <option value="Appartement">Apartment</option>
+                    <option value="Terrain">Terrain</option>
                 </select>
             </div>
 

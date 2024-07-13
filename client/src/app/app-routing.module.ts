@@ -11,13 +11,13 @@ import { ContratComponent } from './contrat/contrat.component'
 import {ShowDetailsContratComponent} from './show-details-contrat/show-details-contrat.component'
 import {UpdateContratComponent} from './update-contrat/update-contrat.component'
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { AllRDVComponent } from './all-rdv/all-rdv.component';
 
 
 const routes: Routes = [
   {path:"show-all-properties",
   component: PropertyListComponent,
-  canActivate: [authGuard],
-  data: { roles: ['ROLE_ADMIN'] }
+ 
 },
   {path:"show-all-contrats",component: ContratListComponent},
   {path:"add-properties", component: AddPropertyComponent},
@@ -26,6 +26,7 @@ const routes: Routes = [
   {path:'updating-contrat-by-id/:id',component:UpdateContratComponent},
   {path:'details-of-properties/:id',component:ShowDetailsComponent},
   {path:'details-of-contrat/:id',component:ShowDetailsContratComponent},
+  {path:'Host-RDVs',component:AllRDVComponent},
   {path:'home',component:HomeComponent},
   {
     path: '',

@@ -29,9 +29,10 @@ export class PropertyListComponent {
 
   getProperties() {
     this.propertyService.getPropertiesList().subscribe(
-      data => {
+      (data) => {
         console.log("aaaa",data)
-        this.properties = data;});
+        this.properties = data;
+      });
     
   }
 
@@ -50,5 +51,9 @@ export class PropertyListComponent {
 
   detailsOfProperty(id: number) {
     this.router.navigate(['details-of-properties', id]);
+  }
+
+  displayRDVList(id: number) {
+    
   }
 }

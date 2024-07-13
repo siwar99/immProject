@@ -7,9 +7,9 @@ export class client {
   lastName !: String;
   
 
-  // constructor() {
-  //   this.email = "" ;
-  //   this.firstName ="";
-  //   this.lastName ="";
-  // }
+  constructor() {
+    this.email = "" ;
+    this.firstName ="";
+    this.lastName ="";
+  }
 }

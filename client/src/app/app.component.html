@@ -15,14 +15,34 @@
         <li class="nav-item">
             <a routerLink="add-contrat" routerLinkActive="active" class="nav-link">Add Contrat</a>
         </li>
-    </ul>
-    <ul class="navbar-nav ms-auto">
-        <li class="nav-item" style="margin-right: 4rem;">
-            <a routerLink="login" routerLinkActive="active" class="nav-link" (click)="onLogout()"> LogOut
-
-            </a>
+        <li class="nav-item">
+            <a routerLink="Host-RDVs" routerLinkActive="active" class="nav-link">List RDV</a>
         </li>
     </ul>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item" style="height: 13px; padding-top: 0.5rem;">
+                <button   mat-icon-button [matBadge]="rdvCount" matBadgeColor="accent" [matMenuTriggerFor]="rdvMenu">
+                  <mat-icon>favorite</mat-icon>
+                </button>
+                <mat-menu #rdvMenu="matMenu">
+                  <ng-container *ngFor="let rdv of RDVS">
+                    <button mat-menu-item>
+                      <div (click)="goToAllRdv()">
+                        <strong>{{ rdv.userClient.firstName }}</strong>
+                        <p>Property: {{ rdv.property.type }}</p>
+                        <p>Date: {{ rdv.dateHeure | date: 'short' }}</p>
+                      </div>
+                    </button>
+                  </ng-container>
+                </mat-menu>
+              </li>
+            <li class="nav-item" style="margin-right: 4rem;">
+                <a routerLink="login" routerLinkActive="active" class="nav-link" (click)="onLogout()"> LogOut
+                </a>
+                
+            </li>
+        </ul>
+    
 
 
 </nav>

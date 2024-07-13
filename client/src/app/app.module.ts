@@ -36,7 +36,10 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
-
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 export function kcFactory(kcServcie: KeycloakService) {
   return () => kcServcie.init();
@@ -68,7 +71,6 @@ export function kcFactory(kcServcie: KeycloakService) {
     FormsModule,
     HomeComponent,
     BrowserAnimationsModule,
-
     ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
@@ -76,6 +78,10 @@ export function kcFactory(kcServcie: KeycloakService) {
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatBadgeModule,
+    MatMenuModule,
+    MatIconModule,
+    MatToolbarModule,
     ToastrModule.forRoot({timeOut:9000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
